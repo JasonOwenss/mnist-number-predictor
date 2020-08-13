@@ -42,9 +42,12 @@ const Canvas = props => {
 
         context.beginPath();
         context.moveTo(start.x, start.y);
-        context.lineTo(end.x, end.y);
+        context.arc(end.x, end.y, 20, 0, Math.PI*2, false);
         context.strokeStyle = "white";
-        context.lineWidth = 20;
+        context.fillStyle = "white";
+        context.fill();
+        //context.fill();
+        //context.lineWidth = 20;
         context.stroke();
         context.closePath();
       }
@@ -151,7 +154,8 @@ const Canvas = props => {
 
   return (
           <div>
-            <canvas 
+            <div>
+              <canvas 
               className="canvas" 
               ref={canvasRef}
               width={500}
@@ -161,8 +165,11 @@ const Canvas = props => {
                 marginTop: 10,
                 backgroundColor: "black",
               }}/>
-            <button onClick={handleClear}>clear</button>
+            </div>
+            <div>
+              <button onClick={handleClear}>clear</button>
             <button onClick={handleSave}>save</button>
+            </div>
           </div>
           )
 }

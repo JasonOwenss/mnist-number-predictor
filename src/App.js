@@ -4,6 +4,7 @@ import './App.css';
 import downscale from 'downscale';
 import * as tf from '@tensorflow/tfjs';
 import Canvas from './components/Canvas';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [b64, setB64] = useState('');
@@ -37,7 +38,7 @@ function App() {
     <div className="App">
       
       <Canvas handleSetB64={handleSetB64}/>
-      <div>{prediction}</div>
+      <div >Predicted number: {prediction}</div>
     </div>
   );
 }
