@@ -54,13 +54,69 @@ const Canvas = props => {
       mouseDown = false;
     }
 
+    function handleTouchDown(e){
+      if (e.target === canvasRef.current){
+        e.preventDefault();
+        mouseDown = true;
+
+        start = {
+          x: e.touches[0].clientX - canvasOffsetLeft,
+          y: e.touches[0].clientY - canvasOffsetTop,
+        };
+
+        end = {
+          x: e.touches[0].clientX - canvasOffsetLeft,
+          y: e.touches[0].clientY - canvasOffsetTop,
+        };
+      }
+    }
+
+    function handleTouchMove(e){
+      if (e.target === canvasRef.current){
+        e.preventDefault();
+        if (mouseDown && context){
+          start = {
+            x: end.x,
+            y: end.y,
+          };
+  
+          end = {
+            x: e.touches[0].clientX - canvasOffsetLeft,
+            y: e.touches[0].clientY - canvasOffsetTop,
+          };
+  
+          context.beginPath();
+          context.moveTo(start.x, start.y);
+          context.lineTo(end.x, end.y);
+          context.strokeStyle = "white";
+          context.lineWidth = 20;
+          context.stroke();
+          context.closePath();
+        }
+      }
+    }
+
+    function handleTouchUp(e){
+      if (e.target === canvasRef.current){
+        e.preventDefault();
+        mouseDown = false;
+      }
+    }
+
+    
+
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext('2d');
+      //ctx.fillStyle = "black";
+      //ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);  
       
       if (ctx){
         canvasRef.current.addEventListener('mousedown', handleMouseDown);
         canvasRef.current.addEventListener('mouseup', handleMouseUp);
         canvasRef.current.addEventListener('mousemove', handleMouseMove);
+        canvasRef.current.addEventListener('touchstart', handleTouchDown, false);
+        canvasRef.current.addEventListener('touchend', handleTouchUp, false);
+        canvasRef.current.addEventListener('touchmove', handleTouchMove, false);
 
         canvasOffsetLeft = canvasRef.current.offsetLeft;
         canvasOffsetTop = canvasRef.current.offsetTop;
@@ -75,6 +131,9 @@ const Canvas = props => {
         canvasRef.current.removeEventListener('mousedown', handleMouseDown);
         canvasRef.current.removeEventListener('mouseup', handleMouseUp);
         canvasRef.current.removeEventListener('mousemove', handleMouseMove);
+        canvasRef.current.removeEventListener('touchstart', handleTouchDown);
+        canvasRef.current.removeEventListener('touchend', handleTouchUp);
+        canvasRef.current.removeEventListener('touchmove', handleTouchMove);
       }
     }
   }, [context]);
@@ -82,6 +141,7 @@ const Canvas = props => {
   function handleClear(e){
     const context = canvasRef.current.getContext('2d');
     context.clearRect(0,0,canvasRef.current.width, canvasRef.current.height);
+    
   }
 
   function handleSave(e){
