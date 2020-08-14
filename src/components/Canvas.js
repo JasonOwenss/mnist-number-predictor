@@ -46,8 +46,6 @@ const Canvas = props => {
         context.strokeStyle = "white";
         context.fillStyle = "white";
         context.fill();
-        //context.fill();
-        //context.lineWidth = 20;
         context.stroke();
         context.closePath();
       }
@@ -90,9 +88,10 @@ const Canvas = props => {
   
           context.beginPath();
           context.moveTo(start.x, start.y);
-          context.lineTo(end.x, end.y);
+          context.arc(end.x, end.y, 20, 0, Math.PI*2, false);
           context.strokeStyle = "white";
-          context.lineWidth = 20;
+          context.fillStyle = "white";
+          context.fill();
           context.stroke();
           context.closePath();
         }

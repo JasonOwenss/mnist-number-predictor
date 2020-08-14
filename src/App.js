@@ -35,9 +35,11 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App d-flex flex-column justify-content align-content-center" >
+      <div>
+        <Canvas handleSetB64={handleSetB64}/>
+      </div>
       
-      <Canvas handleSetB64={handleSetB64}/>
       <div >Predicted number: {prediction}</div>
     </div>
   );
